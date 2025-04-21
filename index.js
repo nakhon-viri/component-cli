@@ -58,14 +58,15 @@ if (command === "init") {
 } else if (!(command !== "add" || !componentName)) {
   const baseDir = path.join(__dirname, "components");
   const templatePath = path.resolve(baseDir, componentName);
-
+  console.log("baseDir", baseDir);
+  console.log("templatePath", templatePath);
   if (!fs.existsSync(templatePath) || !templatePath.startsWith(baseDir)) {
     console.log(`❌ Component "${componentName}" not found.`);
     process.exit(1);
   }
 
   const targetPath = path.join(process.cwd(), "components", componentName);
-
+  console.log("targetPath", targetPath);
   await fs.copy(templatePath, targetPath);
 
   console.log(
