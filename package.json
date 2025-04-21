@@ -12,5 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "fs-extra": "^11.3.0"
-  }
+  },
+  "type": "module"
 }
