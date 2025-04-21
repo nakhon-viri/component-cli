@@ -23,8 +23,7 @@ if (!fs.existsSync(templatePath)) {
   console.log(`❌ Component "${componentName}" not found.`);
   process.exit(1);
 }
-console.log("templatePath", templatePath);
-console.log("targetPath", targetPath);
+
 await fs.copy(templatePath, targetPath);
 
 console.log(
