@@ -101,14 +101,15 @@ if (command === "init") {
         process.exit(1);
       }
 
-      const defaultPath = jsonData?.aliases?.default;
+      const defaultPath =
+        getProcessArgs("--d-path") || jsonData?.aliases?.default;
       if (!defaultPath) {
         console.log("Default path not found.");
         process.exit(1);
       }
+
       const pathComponents =
         getProcessArgs("--path") || jsonData?.aliases?.path?.[defaultPath];
-
       if (!pathComponents) {
         console.log("Path components not found.");
         process.exit(1);
