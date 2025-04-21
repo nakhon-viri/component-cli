@@ -40,7 +40,8 @@ if (command !== "add" || !componentName) {
 
 const templatePath = path.join(__dirname, "components", componentName);
 const targetPath = path.join(process.cwd(), "components", componentName);
-
+console.log("targetPath", targetPath);
+console.log("templatePath", templatePath);
 if (!fs.existsSync(templatePath)) {
   console.log(`❌ Component "${componentName}" not found.`);
   process.exit(1);
