@@ -44,6 +44,7 @@ const baseDir = path.join(__dirname, "components");
 const templatePath = path.resolve(baseDir, componentName);
 const targetPath = path.join(process.cwd(), "components", componentName);
 
+console.log("baseDir", baseDir);
 console.log("targetPath", targetPath);
 console.log("templatePath", templatePath);
 
