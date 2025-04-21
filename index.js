@@ -64,7 +64,7 @@ if (command === "init") {
     console.log(`❌ Component "${componentName}" not found.`);
     process.exit(1);
   }
-
+  console.log('process.cwd()', process.cwd())
   const targetPath = path.join(process.cwd(), "components", componentName);
   console.log("targetPath", targetPath);
   await fs.copy(templatePath, targetPath);
