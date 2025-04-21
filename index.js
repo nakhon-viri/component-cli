@@ -78,22 +78,30 @@ if (command === "init") {
     }
   );
 } else if (!(command !== "add" || !componentName)) {
-  const baseDir = path.join(__dirname, "components");
-  const templatePath = path.resolve(baseDir, componentName);
-  console.log("baseDir", baseDir);
-  console.log("templatePath", templatePath);
-  if (!fs.existsSync(templatePath) || !templatePath.startsWith(baseDir)) {
-    console.log(`❌ Component "${componentName}" not found.`);
-    process.exit(1);
-  }
-  console.log("process.cwd()", process.cwd());
-  const targetPath = path.join(process.cwd(), "components", componentName);
-  console.log("targetPath", targetPath);
-  await fs.copy(templatePath, targetPath);
+  try {
+    const data = fs.readFileSync("component-cli.config.json", "utf8");
+    const jsonData = JSON.parse(data);
+    console.log("Read JSON:", jsonData);
 
-  console.log(
-    `✅ Added component "${componentName}" to ./components/${componentName}`
-  );
+    const baseDir = path.join(__dirname, "components");
+    const templatePath = path.resolve(baseDir, componentName);
+    console.log("baseDir", baseDir);
+    console.log("templatePath", templatePath);
+    if (!fs.existsSync(templatePath) || !templatePath.startsWith(baseDir)) {
+      console.log(`❌ Component "${componentName}" not found.`);
+      process.exit(1);
+    }
+    console.log("process.cwd()", process.cwd());
+    const targetPath = path.join(process.cwd(), "components", componentName);
+    console.log("targetPath", targetPath);
+    await fs.copy(templatePath, targetPath);
+
+    console.log(
+      `✅ Added component "${componentName}" to ./components/${componentName}`
+    );
+  } catch (err) {
+    console.error("Error reading or parsing file:", err);
+  }
 } else {
   console.log("Usage: npx github:<user>/<repo> add <component>");
   process.exit(1);
