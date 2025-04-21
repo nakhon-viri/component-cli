@@ -38,11 +38,16 @@ if (command !== "add" || !componentName) {
   process.exit(1);
 }
 
-const templatePath = path.join(__dirname, "components", componentName);
+// templatePath.startsWith(path.join(__dirname, "components"))
+
+const baseDir = path.join(__dirname, "components");
+const templatePath = path.resolve(baseDir, componentName);
 const targetPath = path.join(process.cwd(), "components", componentName);
+
 console.log("targetPath", targetPath);
 console.log("templatePath", templatePath);
-if (!fs.existsSync(templatePath)) {
+
+if (!fs.existsSync(templatePath) || !templatePath.startsWith(baseDir)) {
   console.log(`❌ Component "${componentName}" not found.`);
   process.exit(1);
 }
