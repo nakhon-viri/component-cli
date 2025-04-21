@@ -32,7 +32,7 @@ const __dirname = path.dirname(__filename);
 const args = process.argv.slice(2);
 const command = args[0]; // เช่น "add"
 const componentName = args[1]; // เช่น "button"
-console.log('command', command)
+console.log("command", command);
 if (command === "init") {
   const data = {
     name: "ChatGPT",
@@ -41,7 +41,7 @@ if (command === "init") {
   };
 
   fs.writeFileSync(
-    "data.json",
+    "component-cli.config.json",
     JSON.stringify(data, null, 2),
     "utf8",
     (err) => {
