@@ -32,12 +32,15 @@ const __dirname = path.dirname(__filename);
 const args = process.argv.slice(2);
 const command = args[0]; // เช่น "add"
 const componentName = args[1]; // เช่น "button"
-console.log("command", command);
 if (command === "init") {
+  console.log("init");
   const data = {
-    name: "ChatGPT",
-    type: "AI",
-    language: "Node.js",
+    aliases: {
+      default: "componets",
+      path: {
+        components: "src/components",
+      },
+    },
   };
 
   fs.writeFileSync(
