@@ -65,7 +65,7 @@ if (command === "init") {
     },
   };
 
-  fs.writeFileSync(
+  fs.writeFile(
     "component-cli.config.json",
     JSON.stringify(data, null, 2),
     "utf8",
