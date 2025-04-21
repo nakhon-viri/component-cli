@@ -3,6 +3,28 @@
 import fs from "fs-extra";
 import path from "path";
 import { fileURLToPath } from "url";
+import inquirer from "inquirer";
+
+// const answers = await inquirer.prompt([
+//   {
+//     type: "input",
+//     name: "component",
+//     message: "คุณต้องการ add component อะไร?",
+//   },
+//   {
+//     type: "confirm",
+//     name: "confirmCopy",
+//     message: "ยืนยันว่าจะ copy component นี้หรือไม่?",
+//     default: true,
+//   },
+// ]);
+// console.log('answers', answers)
+// if (answers.confirmCopy) {
+//   console.log(`✅ กำลัง copy ${answers.component}...`);
+//   // ดำเนินการ copy ที่นี่
+// } else {
+//   console.log("❌ ยกเลิกแล้ว");
+// }
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
