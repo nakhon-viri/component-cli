@@ -82,7 +82,16 @@ if (command === "init") {
     const data = fs.readFileSync("component-cli.config.json", "utf8");
     const jsonData = JSON.parse(data);
     console.log("Read JSON:", jsonData);
-
+    const defaultPath = jsonData?.aliases?.default;
+    if (!defaultPath) {
+      console.log("Default path not found.");
+      process.exit(1);
+    }
+    const pathComponents = jsonData?.aliases?.path?.[defaultPath];
+    if (!pathComponents) {
+      console.log("Path components not found.");
+      process.exit(1);
+    }
     const baseDir = path.join(__dirname, "components");
     const templatePath = path.resolve(baseDir, componentName);
     console.log("baseDir", baseDir);
@@ -92,7 +101,7 @@ if (command === "init") {
       process.exit(1);
     }
     console.log("process.cwd()", process.cwd());
-    const targetPath = path.join(process.cwd(), "components", componentName);
+    const targetPath = path.join(process.cwd(), pathComponents, componentName);
     console.log("targetPath", targetPath);
     await fs.copy(templatePath, targetPath);
 
