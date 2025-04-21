@@ -58,7 +58,7 @@ if (command === "init") {
   console.log("init");
   const data = {
     aliases: {
-      default: "componets",
+      default: "components",
       path: {
         components: "src/components",
       },
@@ -79,34 +79,53 @@ if (command === "init") {
   );
 } else if (!(command !== "add" || !componentName)) {
   try {
-    const data = fs.readFileSync("component-cli.config.json", "utf8");
-    const jsonData = JSON.parse(data);
-    console.log("Read JSON:", jsonData);
-    const defaultPath = jsonData?.aliases?.default;
-    if (!defaultPath) {
-      console.log("Default path not found.");
-      process.exit(1);
-    }
-    const pathComponents = jsonData?.aliases?.path?.[defaultPath];
-    if (!pathComponents) {
-      console.log("Path components not found.");
-      process.exit(1);
-    }
-    const baseDir = path.join(__dirname, "components");
-    const templatePath = path.resolve(baseDir, componentName);
-    console.log("baseDir", baseDir);
-    console.log("templatePath", templatePath);
-    if (!fs.existsSync(templatePath) || !templatePath.startsWith(baseDir)) {
-      console.log(`❌ Component "${componentName}" not found.`);
-      process.exit(1);
-    }
-    console.log("process.cwd()", process.cwd());
-    const targetPath = path.join(process.cwd(), pathComponents, componentName);
-    console.log("targetPath", targetPath);
-    await fs.copy(templatePath, targetPath);
+    const data = fs.readFile(
+      "component-cli.config.json",
+      "utf8",
+      async (err, data) => {
+        if (err) {
+          console.error("Can't read file component-cli.config.json.");
+          process.exit(1);
+          return;
+        }
+        let jsonData = null;
+        try {
+          jsonData = JSON.parse(data);
+        } catch (parseErr) {
+          console.error("Can't read file component-cli.config.json.");
+          process.exit(1);
+        }
+        const defaultPath = jsonData?.aliases?.default;
+        if (!defaultPath) {
+          console.log("Default path not found.");
+          process.exit(1);
+        }
+        const pathComponents = jsonData?.aliases?.path?.[defaultPath];
+        if (!pathComponents) {
+          console.log("Path components not found.");
+          process.exit(1);
+        }
+        const baseDir = path.join(__dirname, "components");
+        const templatePath = path.resolve(baseDir, componentName);
+        console.log("baseDir", baseDir);
+        console.log("templatePath", templatePath);
+        if (!fs.existsSync(templatePath) || !templatePath.startsWith(baseDir)) {
+          console.log(`❌ Component "${componentName}" not found.`);
+          process.exit(1);
+        }
+        console.log("process.cwd()", process.cwd());
+        const targetPath = path.join(
+          process.cwd(),
+          pathComponents,
+          componentName
+        );
+        console.log("targetPath", targetPath);
+        await fs.copy(templatePath, targetPath);
 
-    console.log(
-      `✅ Added component "${componentName}" to ./components/${componentName}`
+        console.log(
+          `✅ Added component "${componentName}" to ./components/${componentName}`
+        );
+      }
     );
   } catch (err) {
     console.error("Error reading or parsing file:", err);
